@@ -123,10 +123,10 @@ $hostname = gethostname();
 							$domain = '_SERVER_HOSTNAME_';
 						}
 						$check = check_valid_resolve_ip($ip, $domain);
-						$ips_ .= '<span class="label label-' . $check['label'] . '">' . $ip . '</span> ' . $check['msg'] . '<br><br>';
+						$ips_ .= '<span class="alert alert-' . $check['label'] . '">' . $ip . '</span> ' . $check['msg'] . '<br><br>';
 					}
 					$ips = rtrim($ips_, '<br>');
-					$ip_result_html = $ips !== '' ? $ips : '<span class="label label-danger">Not Resolve</span>';
+					$ip_result_html = $ips !== '' ? $ips : '<span class="alert alert-danger">Not Resolve</span>';
 					if ($domain === '_SERVER_HOSTNAME_') {
 						$domain = $hostname;
 						$domain_local_acc['acc'] = 'root';
