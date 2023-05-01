@@ -46,7 +46,7 @@ function check_valid_resolve_ip($ip, $domain): array
 
 function get_domain_ip_local_file($domain): array
 {
-	$file_lines = open_file_per_line('userdatadomains');
+	$file_lines = open_file_per_line('/etc/userdatadomains');
 	//$file_ip_nat_lines = open_file_per_line('/var/cpanel/cpnat');
 	foreach ($file_lines as $line) {
 		$explode = explode('==', $line);
@@ -66,8 +66,7 @@ function get_domain_ip_local_file($domain): array
 	return [];
 }
 
-//$all_domains_local = open_file_per_line('/etc/localdomains');
-$all_domains_local = open_file_per_line('localdomains');
+$all_domains_local = open_file_per_line('/etc/localdomains');
 $hostname = gethostname();
 ?>
 <html>
