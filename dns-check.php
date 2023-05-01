@@ -153,9 +153,11 @@ $hostname = gethostname();
 		</div>
 	</div>
 </div>
+<div style="background-color: white !important;">
 <?php
 if (class_exists(WHM::class)) {
 	WHM::footer();
 }
 ?>
+</div>
 </body>
