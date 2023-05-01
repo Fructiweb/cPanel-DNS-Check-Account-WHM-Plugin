@@ -1,6 +1,15 @@
 <?php
+$localdomain = '/etc/localdomains';
+$userdatadomains = '/etc/userdatadomains';
+$ini_set = 0;
 
-ini_set('display_errors', 1);
+if (file_exists('.env')) {
+	$localdomain = 'localdomains';
+	$userdatadomains = 'userdatadomains';
+	$ini_set = 1;
+}
+
+ini_set('display_errors', $ini_set);
 
 function resolve_domain($domain)
 {
@@ -48,27 +57,28 @@ function check_valid_resolve_ip($ip, $domain)
 
 function get_domain_ip_local_file($domain)
 {
-	$file_lines = open_file_per_line('/etc/userdatadomains');
-	//$file_ip_nat_lines = open_file_per_line('/var/cpanel/cpnat');
+	global $userdatadomains;
+	$file_lines = open_file_per_line($userdatadomains);
+	$file_ip_nat_lines = open_file_per_line('/var/cpanel/cpnat');
 	foreach ($file_lines as $line) {
 		$explode = explode('==', $line);
 		$explode_two = explode(':', $explode[0]);
 		if (trim($explode_two[0]) === trim($domain)) {
 			$ip_port = $explode[5];
 			$explode_ip = explode(':', $ip_port);
-			/*foreach ($file_ip_nat_lines as $line_ip_nat) {
+			foreach ($file_ip_nat_lines as $line_ip_nat) {
 				$explode_ip_nat = explode(' ', $line_ip_nat);
 				if ($explode_ip_nat[0] == $explode_ip[0]) {
 					$explode_ip[0] = $explode_ip_nat[1];
 				}
-			}*/
+			}
 			return ['ip' => $explode_ip[0], 'acc' => trim($explode_two[1]), 'reseller' => trim($explode[1]), 'type' => trim($explode[2])];
 		}
 	}
 	return [];
 }
 
-$all_domains_local = open_file_per_line('/etc/localdomains');
+$all_domains_local = open_file_per_line($localdomain);
 $hostname = gethostname();
 ?>
 <html>
@@ -77,7 +87,6 @@ $hostname = gethostname();
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css"
 	      integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
-	<!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css"-->
 </head>
 <body>
 <div class="container-fluid">
@@ -102,7 +111,6 @@ $hostname = gethostname();
 				</thead>
 				<tbody>
 				<?php
-				$i = 1;
 				foreach ($all_domains_local as $domain) {
 					$domain_local_acc = get_domain_ip_local_file($domain);
 					$resolve_ips = resolve_domain($domain);
@@ -110,7 +118,6 @@ $hostname = gethostname();
 					if ($domain_local_acc['type'] === 'sub') {
 						continue;
 					}
-
 					foreach ($resolve_ips as $ip) {
 						if ($domain === $hostname) {
 							$domain = '_SERVER_HOSTNAME_';
@@ -133,7 +140,6 @@ $hostname = gethostname();
 						<td><?= $ip_result_html ?><br></td>
 					</tr>
 					<?php
-					$i++;
 				}
 				?>
 				</tbody>
