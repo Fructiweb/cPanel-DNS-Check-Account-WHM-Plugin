@@ -14,5 +14,3 @@ $message = $value;
 $headers = 'From: root@' . $hostname . "\r\n" .
         'X-Mailer: PHP/' . phpversion() . "\r\n" .
         'Content-Type: text/html; charset=ISO-8859-1\r\n';
-
-mail($to, $subject, $message, $headers);
