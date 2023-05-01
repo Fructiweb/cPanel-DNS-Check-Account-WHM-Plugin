@@ -2,7 +2,7 @@
 
 ini_set('display_errors', 1);
 
-function resolve_domain($domain): array
+function resolve_domain($domain)
 {
 	$dns = '8.8.8.8';  // Google Public DNS
 	if (rand(0, 1) == 1) {
@@ -16,7 +16,7 @@ function resolve_domain($domain): array
 	return $ips;
 }
 
-function open_file_per_line($file): bool|array
+function open_file_per_line($file)
 {
 	$handle = fopen($file, "r");
 	if ($handle) {
@@ -31,7 +31,7 @@ function open_file_per_line($file): bool|array
 	}
 }
 
-function check_valid_resolve_ip($ip, $domain): array
+function check_valid_resolve_ip($ip, $domain)
 {
 	if ($domain === '_SERVER_HOSTNAME_') {
 		return ['label' => 'info', 'msg' => ''];
@@ -46,7 +46,7 @@ function check_valid_resolve_ip($ip, $domain): array
 	return ['label' => 'success', 'msg' => ''];
 }
 
-function get_domain_ip_local_file($domain): array
+function get_domain_ip_local_file($domain)
 {
 	$file_lines = open_file_per_line('/etc/userdatadomains');
 	//$file_ip_nat_lines = open_file_per_line('/var/cpanel/cpnat');
