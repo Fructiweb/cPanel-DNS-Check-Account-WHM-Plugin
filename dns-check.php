@@ -1,5 +1,7 @@
 <?php
 
+ini_set('display_errors', 1);
+
 function resolve_domain($domain): array
 {
 	$dns = '8.8.8.8';  // Google Public DNS
