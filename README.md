@@ -2,8 +2,7 @@
 
 ### Install
 
-`
-mkdir -p /usr/local/cpanel/whostmgr/docroot/cgi/cpanel-account-dns-check`<br>
+`mkdir -p /usr/local/cpanel/whostmgr/docroot/cgi/cpanel-account-dns-check`<br>
 `cd /usr/local/cpanel/whostmgr/docroot/cgi/cpanel-account-dns-check/`<br>
 `wget --no-check-certificate -O master.zip https://github.com/felipegabriel/cPanel-DNS-Check-Account-WHM-Plugin/archive/master.zip`<br>
 `unzip master.zip`<br>
