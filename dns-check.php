@@ -89,76 +89,73 @@ function get_domain_ip_local_file($domain)
 $all_domains_local = open_file_per_line($localdomain);
 $hostname = gethostname();
 ?>
-	<html>
-	<head>
-		<title>DNS Check Account</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css"
-		      integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN"
-		      crossorigin="anonymous">
-	</head>
-	<body>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<h1>cPanel DNS Check Account WHM Plugin</h1>
-			</div>
+<title>DNS Check Account</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css"
+      integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN"
+      crossorigin="anonymous">
+<body>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<h1>cPanel DNS Check Account WHM Plugin</h1>
 		</div>
 	</div>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<table class="table">
-					<thead>
-					<tr>
-						<td>User</td>
-						<td>Reseller User</td>
-						<td>Domain</td>
-						<td>Local IP</td>
-						<td></td>
-					</tr>
-					</thead>
-					<tbody>
-					<?php
-					foreach ($all_domains_local as $domain) {
-						$domain_local_acc = get_domain_ip_local_file($domain);
-						$resolve_ips = resolve_domain($domain);
-						$ips_ = '';
-						if ($domain_local_acc['type'] === 'sub') {
-							continue;
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table">
+				<thead>
+				<tr>
+					<td>User</td>
+					<td>Reseller User</td>
+					<td>Domain</td>
+					<td>Local IP</td>
+					<td></td>
+				</tr>
+				</thead>
+				<tbody>
+				<?php
+				foreach ($all_domains_local as $domain) {
+					$domain_local_acc = get_domain_ip_local_file($domain);
+					$resolve_ips = resolve_domain($domain);
+					$ips_ = '';
+					if ($domain_local_acc['type'] === 'sub') {
+						continue;
+					}
+					foreach ($resolve_ips as $ip) {
+						if ($domain === $hostname) {
+							$domain = '_SERVER_HOSTNAME_';
 						}
-						foreach ($resolve_ips as $ip) {
-							if ($domain === $hostname) {
-								$domain = '_SERVER_HOSTNAME_';
-							}
-							$check = check_valid_resolve_ip($ip, $domain);
-							$ips_ .= '<span class="alert alert-' . $check['label'] . '">' . $ip . '</span> ' . $check['msg'] . '<br><br>';
-						}
-						$ips = rtrim($ips_, '<br>');
-						$ip_result_html = $ips !== '' ? $ips : '<span class="alert alert-danger">Not Resolve</span>';
-						if ($domain === '_SERVER_HOSTNAME_') {
-							$domain = $hostname;
-							$domain_local_acc['acc'] = 'root';
-						}
-						?>
-						<tr>
-							<td><?= $domain_local_acc['acc'] ?></td>
-							<td><?= $domain_local_acc['reseller'] ?></td>
-							<td>(<?= $domain_local_acc['type'] ?>) <?= $domain ?></td>
-							<td><?= $domain_local_acc['ip'] ?></td>
-							<td><?= $ip_result_html ?><br></td>
-						</tr>
-						<?php
+						$check = check_valid_resolve_ip($ip, $domain);
+						$ips_ .= '<span class="alert alert-' . $check['label'] . '">' . $ip . '</span> ' . $check['msg'] . '<br><br>';
+					}
+					$ips = rtrim($ips_, '<br>');
+					$ip_result_html = $ips !== '' ? $ips : '<span class="alert alert-danger">Not Resolve</span>';
+					if ($domain === '_SERVER_HOSTNAME_') {
+						$domain = $hostname;
+						$domain_local_acc['acc'] = 'root';
 					}
 					?>
-					</tbody>
-				</table>
-			</div>
+					<tr>
+						<td><?= $domain_local_acc['acc'] ?></td>
+						<td><?= $domain_local_acc['reseller'] ?></td>
+						<td>(<?= $domain_local_acc['type'] ?>) <?= $domain ?></td>
+						<td><?= $domain_local_acc['ip'] ?></td>
+						<td><?= $ip_result_html ?><br></td>
+					</tr>
+					<?php
+				}
+				?>
+				</tbody>
+			</table>
 		</div>
 	</div>
-	</body>
-	</html>
+</div>
 <?php
 if (class_exists(WHM::class)) {
 	WHM::footer();
 }
+?>
+</body>
