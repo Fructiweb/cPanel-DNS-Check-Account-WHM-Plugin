@@ -2,7 +2,7 @@
 
 include_once('/usr/local/cpanel/php/WHM.php');
 if (class_exists(WHM::class)) {
-	WHM::header('Example Plugin Interface', 0, 0);
+	WHM::header('', 0, 0);
 }
 
 $localdomain = '/etc/localdomains';
@@ -153,9 +153,4 @@ $hostname = gethostname();
 		</div>
 	</div>
 </div>
-<?php
-if (class_exists(WHM::class)) {
-	WHM::footer();
-}
-?>
 </body>
