@@ -121,7 +121,7 @@ $hostname = gethostname();
 					$domain_local_acc = get_domain_ip_local_file($domain);
 					$resolve_ips = resolve_domain($domain);
 					$ips_ = '';
-					if ($domain_local_acc['type'] === 'sub' || $domain_local_acc['ip'] === '') {
+					if ($domain_local_acc['type'] === 'sub' || $domain_local_acc['acc'] === '') {
 						continue;
 					}
 					foreach ($resolve_ips as $ip) {
