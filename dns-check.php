@@ -139,7 +139,7 @@ $hostname = gethostname();
 					}
 					?>
 					<tr>
-						<td><?= $domain_local_acc['acc'] ?></td>
+						<td><?php var_dump($domain_local_acc['acc']) ?></td>
 						<td><?= $domain_local_acc['reseller'] ?></td>
 						<td>(<?= $domain_local_acc['type'] ?>) <?= $domain ?></td>
 						<td><?= $domain_local_acc['ip'] ?></td>
