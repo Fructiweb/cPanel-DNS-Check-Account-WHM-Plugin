@@ -1,5 +1,7 @@
 <?php
 
+phpinfo();
+
 include_once('/usr/local/cpanel/php/WHM.php');
 if (class_exists(WHM::class)) {
 	WHM::header('', 0, 0);
