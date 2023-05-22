@@ -1,9 +1,7 @@
 <?php
 
-phpinfo();
-
 include_once('/usr/local/cpanel/php/WHM.php');
-if (class_exists(WHM::class)) {
+if (class_exists(class: WHM::class)) {
 	WHM::header('', 0, 0);
 }
 
@@ -19,7 +17,7 @@ if (file_exists('.env')) {
 
 ini_set('display_errors', $ini_set);
 
-function resolve_domain($domain)
+function resolve_domain($domain): array
 {
 	$dns = '8.8.8.8';  // Google Public DNS
 	if (rand(0, 1) == 1) {
@@ -33,7 +31,7 @@ function resolve_domain($domain)
 	return $ips;
 }
 
-function open_file_per_line($file)
+function open_file_per_line($file): bool|array
 {
 	$handle = fopen($file, "r");
 	if ($handle) {
@@ -48,7 +46,7 @@ function open_file_per_line($file)
 	}
 }
 
-function check_valid_resolve_ip($ip, $domain)
+function check_valid_resolve_ip($ip, $domain): array
 {
 	if ($domain === '_SERVER_HOSTNAME_') {
 		return ['label' => 'info', 'msg' => ''];
@@ -63,7 +61,7 @@ function check_valid_resolve_ip($ip, $domain)
 	return ['label' => 'success', 'msg' => ''];
 }
 
-function get_domain_ip_local_file($domain)
+function get_domain_ip_local_file($domain): array
 {
 	global $userdatadomains;
 
