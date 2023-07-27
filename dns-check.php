@@ -118,11 +118,12 @@ $hostname = gethostname();
                     <tbody>
                     <?php
                     foreach ($all_domains_local as $domain) {
+                        $domain_local_acc = get_domain_ip_local_file($domain);
+
                         if ($domain_local_acc['type'] === 'sub' || $domain_local_acc['type'] === 'main' || empty($domain_local_acc['acc'])) {
                             continue;
                         }
 
-                        $domain_local_acc = get_domain_ip_local_file($domain);
                         $resolve_ips = resolve_domain($domain);
                         $ips_ = '';
 
