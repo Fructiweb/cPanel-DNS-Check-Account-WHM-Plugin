@@ -151,8 +151,7 @@ $hostname = gethostname();
 
                             $fructiweb_cloud_domain = preg_replace($pattern_cloud, $replacement_cloud, $domain_local_acc['acc']);
                             $fructiweb_cloud_domain = preg_replace($pattern_domain, '', $fructiweb_cloud_domain);
-
-                            var_dump($fructiweb_cloud_domain . '.fr');
+                            $fructiweb_cloud_domain .= '.fr';
 
                             $shell_command_output = json_decode($shell_command_output, true);
                             $login_link = '<a href="https://' . $fructiweb_cloud_domain . ':2083/login/?session=' . $shell_command_output['data']['session'] . '" target="_blank">Login</a>';
