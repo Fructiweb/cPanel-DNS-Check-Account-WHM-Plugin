@@ -146,11 +146,12 @@ $hostname = gethostname();
 
                         if ($shell_command_output) {
                             $pattern_cloud = "/cloud\d+/";
-                            $pattern_domain = "/(\w+)fructiweb(\w+)/";
+                            $pattern_domain = "/(\w+)fructiweb/";
                             $replacement_cloud = "$0.";
+                            $replacement_domain = "$0.fr";
 
                             $fructiweb_cloud_domain = preg_replace($pattern_cloud, $replacement_cloud, $domain_local_acc['acc']);
-                            $fructiweb_cloud_domain = preg_replace($pattern_domain, $replacement_cloud, $fructiweb_cloud_domain);
+                            $fructiweb_cloud_domain = preg_replace($pattern_domain, $replacement_domain, $fructiweb_cloud_domain);
 
                             var_dump($fructiweb_cloud_domain);
 
