@@ -1,6 +1,6 @@
 <?php
 
-include_once('/usr/local/cpanel/php/WHM.php');
+@include_once('/usr/local/cpanel/php/WHM.php');
 if (class_exists(class: WHM::class)) {
     WHM::header('', 0, 0);
 }
@@ -33,7 +33,7 @@ function resolve_domain($domain): array
 
 function open_file_per_line($file): bool|array
 {
-    $handle = fopen($file, "r");
+    @$handle = fopen($file, "r");
     if ($handle) {
         $lines = [];
         while (($line = fgets($handle)) !== false) {
@@ -141,17 +141,19 @@ $hostname = gethostname();
                             $domain_local_acc['acc'] = 'root';
                         }
 
-                        // Execute cli command and get the returning json object
-                        // whmapi1 --output=jsonpretty \
-                        //  create_user_session \
-                        //  user='user@example.com' \
-                        //  service='cpaneld'
                         $login_link = '';
                         $shell_command_output = shell_exec('whmapi1 --output=jsonpretty create_user_session user=' . $domain_local_acc['acc'] . ' service=cpaneld');
 
                         if ($shell_command_output) {
+                            $pattern = "/cloud\d+/";
+                            $replacement = "$0.";
+                            $fructiweb_cloud_domain = preg_replace($pattern, $replacement, $domain_local_acc['acc']);
+                            $fructiweb_cloud_domain .= 'fructiweb.fr';
+
+                            var_dump($fructiweb_cloud_domain);
+
                             $shell_command_output = json_decode($shell_command_output, true);
-                            $login_link = '<a href="https://' . $domain . ':2083/login/?session=' . $shell_command_output['data']['session'] . '" target="_blank">Login</a>';
+                            $login_link = '<a href="https://' . $fructiweb_cloud_domain . ':2083/login/?session=' . $shell_command_output['data']['session'] . '" target="_blank">Login</a>';
                         }
                         ?>
                         <tr>
@@ -160,7 +162,7 @@ $hostname = gethostname();
                             <td>(<?= $domain_local_acc['type'] ?>) <?= $domain ?></td>
                             <td><?= $domain_local_acc['ip'] ?></td>
                             <td><?= $ip_result_html ?><br></td>
-                            <td><<?= $login_link ?><br></td>
+                            <td><?= $login_link ?><br></td>
                         </tr>
                         <?php
                     }
