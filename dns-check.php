@@ -151,8 +151,7 @@ $hostname = gethostname();
 
                         if ($shell_command_output) {
                             $shell_command_output = json_decode($shell_command_output, true);
-                            //$login_link = '<a href="https://' . $domain . ':2083/login/?session=' . $shell_command_output['data']['session'] . '" target="_blank">Login</a>';
-                            $login_link = $shell_command_output['data']['url'];
+                            $login_link = '<a href="https://' . $domain . ':2083/login/?session=' . $shell_command_output['data']['session'] . '" target="_blank">Login</a>';
                         }
                         ?>
                         <tr>
