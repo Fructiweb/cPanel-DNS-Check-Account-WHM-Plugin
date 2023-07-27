@@ -154,7 +154,11 @@ $hostname = gethostname();
                             $fructiweb_cloud_domain .= '.fr';
 
                             $shell_command_output = json_decode($shell_command_output, true);
-                            $login_link = '<a href="https://' . $fructiweb_cloud_domain . ':2083/login/?session=' . $shell_command_output['data']['session'] . '" target="_blank">Login</a>';
+                            // retrieve domain name from url in $shell_command_output['data']['url']
+                            $default_domain_name = parse_url($shell_command_output['data']['url'], PHP_URL_HOST);
+                            var_dump($default_domain_name);
+                            // replace default domain to fructiweb cloud domain for login
+                            $shell_command_output['data']['url'] = str_replace($domain_local_acc['acc'] . '.fructiweb', $fructiweb_cloud_domain, $shell_command_output['data']['url']);
                         }
                         ?>
                         <tr>
