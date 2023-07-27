@@ -147,7 +147,7 @@ $hostname = gethostname();
                             $login_link = '<a class="btn btn-danger rounded disabled" href="">Suspended</a>';
                         } else {
                             $login_link = '';
-                            $shell_link_command_output = shell_exec('whmapi1 --output=jsonpretty create_user_session user=' . $domain_local_acc['acc'] . ' service=cpaneld');
+                            $shell_link_command_output = shell_exec('/usr/local/cpanel/bin/whmapi1 --output=jsonpretty create_user_session user=' . $domain_local_acc['acc'] . ' service=cpaneld');
 
                             $pattern_cloud = "/cloud\d+/";
                             $pattern_domain = "/(\w+)fructiweb/";
@@ -157,8 +157,11 @@ $hostname = gethostname();
                             $fructiweb_cloud_domain = preg_replace($pattern_domain, '', $fructiweb_cloud_domain);
                             $fructiweb_cloud_domain .= '.fr';
 
+                            var_dump($fructiweb_cloud_domain);
+
                             $shell_command_output = json_decode($shell_command_output, true);
                             $default_domain_name = parse_url($shell_command_output['data']['url'], PHP_URL_HOST);
+                            var_dump($shell_command_output['data']['url']);
                             $login_link = str_replace($default_domain_name, $fructiweb_cloud_domain, $shell_command_output['data']['url']);
                             var_dump($login_link);
                             $login_link = '<a class="btn btn-info rounded" href="' . $login_link . '" target="_blank">Connexion</a>';
