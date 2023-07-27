@@ -86,7 +86,7 @@ function get_domain_ip_local_file($domain): array
     return [];
 }
 
-$all_suspended_users = json_decode(shell_exec('/usr/local/cpanel/bin/whmapi1 listsuspended'), true);
+$all_suspended_users = json_decode(shell_exec('/usr/local/cpanel/bin/whmapi1 listsuspended --output=jsonpretty'), true);
 var_dump($all_suspended_users);
 $all_domains_local = open_file_per_line($localdomain);
 $hostname = gethostname();
