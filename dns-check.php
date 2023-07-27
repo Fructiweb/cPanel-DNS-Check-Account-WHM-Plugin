@@ -125,10 +125,7 @@ $hostname = gethostname();
                             continue;
                         }
 
-                        // check if suspended
                         $is_suspended = in_array($domain_local_acc['acc'], array_column($all_suspended_users['data']['account'], 'user'));
-                        // look in $all_suspended_users['data']['account'][x]['user'] if user_name exist
-                        var_dump($is_suspended);
                         $resolve_ips = resolve_domain($domain);
                         $ips_ = '';
 
@@ -149,7 +146,7 @@ $hostname = gethostname();
                         $login_link = '';
                         $shell_link_command_output = shell_exec('/usr/local/cpanel/bin/whmapi1 --output=jsonpretty create_user_session user=' . $domain_local_acc['acc'] . ' service=cpaneld');
 
-                        if ($shell_command_output) {
+                        if ($shell_command_output && !$is_suspended) {
                             $pattern_cloud = "/cloud\d+/";
                             $pattern_domain = "/(\w+)fructiweb/";
                             $replacement_cloud = "$0.";
@@ -161,6 +158,9 @@ $hostname = gethostname();
                             $shell_command_output = json_decode($shell_command_output, true);
                             $default_domain_name = parse_url($shell_command_output['data']['url'], PHP_URL_HOST);
                             $login_link = str_replace($default_domain_name, $fructiweb_cloud_domain, $shell_command_output['data']['url']);
+                            $login_link = '<a class="btn btn-info rounded" href="' . $login_link . '" target="_blank">Connexion</a>';
+                        } else {
+                            $login_link = '<a class="btn btn-danger rounded disabled" href="">Suspended</a>';
                         }
                         ?>
                         <tr>
@@ -169,8 +169,7 @@ $hostname = gethostname();
                             <td>(<?= $domain_local_acc['type'] ?>) <?= $domain ?></td>
                             <td><?= $domain_local_acc['ip'] ?></td>
                             <td><?= $ip_result_html ?><br></td>
-                            <td><a class="btn btn-info rounded" href="<?= $login_link ?>" target="_blank">Connexion</a>
-                                <br></td>
+                            <td><?= $login_link ?><br></td>
                         </tr>
                         <?php
                     }
