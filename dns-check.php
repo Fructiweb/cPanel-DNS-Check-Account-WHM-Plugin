@@ -145,10 +145,11 @@ $hostname = gethostname();
                         $shell_command_output = shell_exec('whmapi1 --output=jsonpretty create_user_session user=' . $domain_local_acc['acc'] . ' service=cpaneld');
 
                         if ($shell_command_output) {
-                            $pattern = "/cloud\d+/";
+                            $pattern_cloud = "/cloud\d+/";
+                            $attern_domain = "/fructiweb\s+/";
                             $replacement = "$0.";
                             $fructiweb_cloud_domain = preg_replace($pattern, $replacement, $domain_local_acc['acc']);
-                            $fructiweb_cloud_domain .= 'fructiweb.fr';
+                            $fructiweb_cloud_domain = preg_replace($pattern, $replacement, $fructiweb_cloud_domain);
 
                             var_dump($fructiweb_cloud_domain);
 
