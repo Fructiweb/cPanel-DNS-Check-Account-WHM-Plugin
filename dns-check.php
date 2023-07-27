@@ -152,12 +152,9 @@ $hostname = gethostname();
                             $fructiweb_cloud_domain = preg_replace($pattern_cloud, $replacement_cloud, $domain_local_acc['acc']);
                             $fructiweb_cloud_domain = preg_replace($pattern_domain, '', $fructiweb_cloud_domain);
                             $fructiweb_cloud_domain .= '.fr';
-
+                            
                             $shell_command_output = json_decode($shell_command_output, true);
-                            // retrieve domain name from url in $shell_command_output['data']['url']
                             $default_domain_name = parse_url($shell_command_output['data']['url'], PHP_URL_HOST);
-                            var_dump($default_domain_name);
-                            // replace default domain name to fructiweb cloud domain for login
                             $login_link = str_replace($default_domain_name, $fructiweb_cloud_domain, $shell_command_output['data']['url']);
                         }
                         ?>
@@ -167,7 +164,8 @@ $hostname = gethostname();
                             <td>(<?= $domain_local_acc['type'] ?>) <?= $domain ?></td>
                             <td><?= $domain_local_acc['ip'] ?></td>
                             <td><?= $ip_result_html ?><br></td>
-                            <td><?= $login_link ?><br></td>
+                            <td><a class="btn btn-info rounded" href="<?= $login_link ?>" target="_blank">Connexion</a>
+                                <br></td>
                         </tr>
                         <?php
                     }
