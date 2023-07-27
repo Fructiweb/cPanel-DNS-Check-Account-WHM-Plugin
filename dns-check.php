@@ -148,7 +148,7 @@ $hostname = gethostname();
                         } else {
                             $login_link = '';
                             $shell_link_command_output = shell_exec('/usr/local/cpanel/bin/whmapi1 --output=jsonpretty create_user_session user=' . $domain_local_acc['acc'] . ' service=cpaneld');
-                            var_dump('??');
+                            
                             $pattern_cloud = "/cloud\d+/";
                             $pattern_domain = "/(\w+)fructiweb/";
                             $replacement_cloud = "$0.";
