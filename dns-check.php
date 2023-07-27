@@ -146,7 +146,7 @@ $hostname = gethostname();
 
                         if ($shell_command_output) {
                             $pattern_cloud = "/cloud\d+/";
-                            $attern_domain = "/fructiweb\s+/";
+                            $attern_domain = "/fructiweb/";
                             $replacement = "$0.";
                             $fructiweb_cloud_domain = preg_replace($pattern, $replacement, $domain_local_acc['acc']);
                             $fructiweb_cloud_domain = preg_replace($pattern, $replacement, $fructiweb_cloud_domain);
