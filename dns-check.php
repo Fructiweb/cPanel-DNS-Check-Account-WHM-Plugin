@@ -157,8 +157,8 @@ $hostname = gethostname();
                             // retrieve domain name from url in $shell_command_output['data']['url']
                             $default_domain_name = parse_url($shell_command_output['data']['url'], PHP_URL_HOST);
                             var_dump($default_domain_name);
-                            // replace default domain to fructiweb cloud domain for login
-                            $shell_command_output['data']['url'] = str_replace($domain_local_acc['acc'] . '.fructiweb', $fructiweb_cloud_domain, $shell_command_output['data']['url']);
+                            // replace default domain name to fructiweb cloud domain for login
+                            $login_link = str_replace($default_domain_name, $fructiweb_cloud_domain, $shell_command_output['data']['url']);
                         }
                         ?>
                         <tr>
