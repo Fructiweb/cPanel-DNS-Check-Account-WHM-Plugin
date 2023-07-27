@@ -87,7 +87,6 @@ function get_domain_ip_local_file($domain): array
 }
 
 $all_suspended_users = json_decode(shell_exec('/usr/local/cpanel/bin/whmapi1 listsuspended --output=jsonpretty'), true);
-var_dump($all_suspended_users);
 $all_domains_local = open_file_per_line($localdomain);
 $hostname = gethostname();
 ?>
@@ -126,6 +125,10 @@ $hostname = gethostname();
                             continue;
                         }
 
+                        // check if suspended
+                        $is_suspended = in_array($domain_local_acc['acc'], array_column($all_suspended_users['data']['account'], 'user'));
+                        // look in $all_suspended_users['data']['account'][x]['user'] if user_name exist
+                        var_dump($is_suspended);
                         $resolve_ips = resolve_domain($domain);
                         $ips_ = '';
 
