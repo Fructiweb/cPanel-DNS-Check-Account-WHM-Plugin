@@ -86,6 +86,8 @@ function get_domain_ip_local_file($domain): array
     return [];
 }
 
+$all_suspended_users = json_decode(shell_exec('/usr/local/cpanel/bin/whmapi1 listsuspended'), true);
+var_dump($all_suspended_users);
 $all_domains_local = open_file_per_line($localdomain);
 $hostname = gethostname();
 ?>
@@ -142,7 +144,7 @@ $hostname = gethostname();
                         }
 
                         $login_link = '';
-                        $shell_command_output = shell_exec('whmapi1 --output=jsonpretty create_user_session user=' . $domain_local_acc['acc'] . ' service=cpaneld');
+                        $shell_link_command_output = shell_exec('/usr/local/cpanel/bin/whmapi1 --output=jsonpretty create_user_session user=' . $domain_local_acc['acc'] . ' service=cpaneld');
 
                         if ($shell_command_output) {
                             $pattern_cloud = "/cloud\d+/";
@@ -152,7 +154,7 @@ $hostname = gethostname();
                             $fructiweb_cloud_domain = preg_replace($pattern_cloud, $replacement_cloud, $domain_local_acc['acc']);
                             $fructiweb_cloud_domain = preg_replace($pattern_domain, '', $fructiweb_cloud_domain);
                             $fructiweb_cloud_domain .= '.fr';
-                            
+
                             $shell_command_output = json_decode($shell_command_output, true);
                             $default_domain_name = parse_url($shell_command_output['data']['url'], PHP_URL_HOST);
                             $login_link = str_replace($default_domain_name, $fructiweb_cloud_domain, $shell_command_output['data']['url']);
