@@ -140,6 +140,20 @@ $hostname = gethostname();
                             $domain = $hostname;
                             $domain_local_acc['acc'] = 'root';
                         }
+
+                        // Execute cli command and get the returning json object
+                        // whmapi1 --output=jsonpretty \
+                        //  create_user_session \
+                        //  user='user@example.com' \
+                        //  service='cpaneld'
+                        $login_link = '';
+                        $shell_command_output = shell_exec('whmapi1 --output=jsonpretty create_user_session user=' . $domain_local_acc['acc'] . ' service=cpaneld');
+
+                        if ($shell_command_output) {
+                            $shell_command_output = json_decode($shell_command_output, true);
+                            //$login_link = '<a href="https://' . $domain . ':2083/login/?session=' . $shell_command_output['data']['session'] . '" target="_blank">Login</a>';
+                            $login_link = $shell_command_output['data']['url'];
+                        }
                         ?>
                         <tr>
                             <td><?= $domain_local_acc['acc'] ?></td>
@@ -147,6 +161,7 @@ $hostname = gethostname();
                             <td>(<?= $domain_local_acc['type'] ?>) <?= $domain ?></td>
                             <td><?= $domain_local_acc['ip'] ?></td>
                             <td><?= $ip_result_html ?><br></td>
+                            <td><a href="<?= $login_link ?>">Connexion</a><br></td>
                         </tr>
                         <?php
                     }
