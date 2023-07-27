@@ -160,7 +160,7 @@ $hostname = gethostname();
                             <td>(<?= $domain_local_acc['type'] ?>) <?= $domain ?></td>
                             <td><?= $domain_local_acc['ip'] ?></td>
                             <td><?= $ip_result_html ?><br></td>
-                            <td><a href="<?= $login_link ?>">Connexion</a><br></td>
+                            <td><<?= $login_link ?><br></td>
                         </tr>
                         <?php
                     }
