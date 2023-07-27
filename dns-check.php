@@ -148,7 +148,7 @@ $hostname = gethostname();
 
                         if ($is_suspended) {
                             $login_link = '<a class="btn btn-danger rounded disabled" href="">Suspended</a>';
-                        } elseif (!empty($shell_command_output)) {
+                        } elseif ($shell_command_output) {
                             var_dump('??');
                             $pattern_cloud = "/cloud\d+/";
                             $pattern_domain = "/(\w+)fructiweb/";
