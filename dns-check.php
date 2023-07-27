@@ -146,6 +146,7 @@ $hostname = gethostname();
                         $login_link = '';
                         $shell_link_command_output = shell_exec('/usr/local/cpanel/bin/whmapi1 --output=jsonpretty create_user_session user=' . $domain_local_acc['acc'] . ' service=cpaneld');
 
+                        var_dump($is_suspended);
                         if ($shell_command_output && $is_suspended) {
                             $pattern_cloud = "/cloud\d+/";
                             $pattern_domain = "/(\w+)fructiweb/";
