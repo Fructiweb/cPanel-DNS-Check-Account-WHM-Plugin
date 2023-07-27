@@ -143,12 +143,11 @@ $hostname = gethostname();
                             $domain_local_acc['acc'] = 'root';
                         }
 
-                        $login_link = '';
-                        $shell_link_command_output = shell_exec('/usr/local/cpanel/bin/whmapi1 --output=jsonpretty create_user_session user=' . $domain_local_acc['acc'] . ' service=cpaneld');
-
                         if ($is_suspended) {
                             $login_link = '<a class="btn btn-danger rounded disabled" href="">Suspended</a>';
-                        } elseif ($shell_command_output) {
+                        } else {
+                            $login_link = '';
+                            $shell_link_command_output = shell_exec('/usr/local/cpanel/bin/whmapi1 --output=jsonpretty create_user_session user=' . $domain_local_acc['acc'] . ' service=cpaneld');
                             var_dump('??');
                             $pattern_cloud = "/cloud\d+/";
                             $pattern_domain = "/(\w+)fructiweb/";
