@@ -92,9 +92,8 @@ $hostname = gethostname();
 ?>
 <title>DNS Check Account</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css"
-      integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN"
-      crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.1/dist/darkly/bootstrap.min.css"
+      integrity="sha256-jBk81HSkRnnLLjgZa5W96w8mjNj/WyoBFo7sbLvn9kg=" crossorigin="anonymous">
 <body>
     <div class="container-fluid">
         <div class="row">
@@ -104,11 +103,13 @@ $hostname = gethostname();
         </div>
     </div>
     <div class="container-fluid">
-        <div class="row">
-            <div class="mt-2 mb-2">
-                <div class="form-floating">
-                    <input id="filterList" class="form-control rounded" placeholder=" ">
-                    <label for="filterList" class="text-dark">{{ __('Recherche...') }} (-1000, date)</label>
+        <div class="row mx-auto">
+            <div class="mt-2 mb-2 mx-auto">
+                <div class="col-4 form-group mx-auto text-center">
+                    <div class="form-floating">
+                        <input id="filterList" class="form-control rounded" placeholder=" ">
+                        <label for="filterList">Recherche</label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -188,6 +189,16 @@ $hostname = gethostname();
         </div>
     </div>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js"
+        integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+        crossorigin="anonymous"></script>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
