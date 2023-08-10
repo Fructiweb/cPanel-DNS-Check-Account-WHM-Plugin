@@ -188,6 +188,10 @@ $hostname = gethostname();
             </div>
         </div>
     </div>
+
+    <div class="row">
+		<?= phpinfo() ?>
+    </div>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js"
