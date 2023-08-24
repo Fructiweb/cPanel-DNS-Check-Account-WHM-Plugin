@@ -166,11 +166,11 @@ $hostname = gethostname();
 						if (!$resolve_ips) {
 							$resolve_ips = resolve_domain($domain);
 							$json[$domain] = ['ip' => $resolve_ips];
+						} else {
+							$resolve_ips = $resolve_ips['ip'];
 						}
 
 						$ips_ = '';
-
-						var_dump($resolve_ips);
 
 						foreach ($resolve_ips as $ip) {
 							if ($domain === $hostname) {
