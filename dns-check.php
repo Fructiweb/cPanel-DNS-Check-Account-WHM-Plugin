@@ -1,18 +1,16 @@
 <?php
-ob_start();
-@include_once('/usr/local/cpanel/php/WHM.php');
-if (class_exists(class: WHM::class)) {
-	WHM::header('', 0, 0);
-}
-
-ob_clean();
-ob_start();
 
 if ($cache_static = @file_get_contents('dns-check.html')) {
 	if (time() - filemtime('dns-check.html') < 86400) {
 		echo $cache_static;
 		exit;
 	}
+}
+
+ob_start();
+@include_once('/usr/local/cpanel/php/WHM.php');
+if (class_exists(class: WHM::class)) {
+	WHM::header('', 0, 0);
 }
 
 $localdomain = '/etc/localdomains';
@@ -186,10 +184,10 @@ $hostname = gethostname();
 								}
 
 								$check = check_valid_resolve_ip($ip, $domain);
-								$ips_ .= '<span class="alert alert-' . $check['label'] . '">' . $ip . '</span> ' . $check['msg'] . '<br><br>';
+								$ips_ .= '<span class="my-auto alert alert-' . $check['label'] . '">' . $ip . '</span> ' . $check['msg'] . '<br><br>';
 							}
 							$ips = rtrim($ips_, '<br>');
-							$ip_result_html = $ips !== '' ? $ips : '<span class="alert alert-danger">Not Resolve</span>';
+							$ip_result_html = $ips !== '' ? $ips : '<span class="alert alert-danger my-auto">Not Resolve</span>';
 							if ($domain === '_SERVER_HOSTNAME_') {
 								$domain = $hostname;
 								$domain_local_acc['acc'] = 'root';
