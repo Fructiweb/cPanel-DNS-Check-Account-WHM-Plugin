@@ -127,6 +127,15 @@ $hostname = gethostname();
                     </thead>
                     <tbody>
 					<?php
+					$json = [];
+					@$json = file_get_contents('dns-check.json');
+					$json = json_decode($json, true);
+					$timestamp = $json['timestamp'] ?? 0;
+
+					if (time() - $timestamp > 86400) {
+						$json = [];
+					}
+
 					foreach ($all_domains_local as $domain) {
 						$domain_local_acc = get_domain_ip_local_file($domain);
 
@@ -135,18 +144,27 @@ $hostname = gethostname();
 						}
 
 						$is_suspended = false;
+
 						if ($all_suspended_users) {
 							$is_suspended = in_array($domain_local_acc['acc'], array_column($all_suspended_users['data']['account'], 'user'));
 						}
-						$resolve_ips = resolve_domain($domain);
+
+						$resolve_ips = $json[$domain] ?? '';
+
+						if (!$resolve_ips) {
+							$resolve_ips = resolve_domain($domain);
+							$json[$domain] = ['ip' => $resolve_ips];
+						}
+
 						$ips_ = '';
 
 						foreach ($resolve_ips as $ip) {
 							if ($domain === $hostname) {
 								$domain = '_SERVER_HOSTNAME_';
 							}
+
 							$check = check_valid_resolve_ip($ip, $domain);
-							$ips_ .= '<span class="alert alert-' . $check['label'] . '">' . $ip . '</span> ' . $check['msg'] . '<br><br>';
+							$ips_ .= '<span class="alert alert-' . $check['label'] . '">' . implode(',', $ip) . '</span> ' . $check['msg'] . '<br><br>';
 						}
 						$ips = rtrim($ips_, '<br>');
 						$ip_result_html = $ips !== '' ? $ips : '<span class="alert alert-danger">Not Resolve</span>';
@@ -191,6 +209,9 @@ $hostname = gethostname();
                         </tr>
 						<?php
 					}
+					$json['timestamp'] = time();
+					$json = json_encode($json);
+					file_put_contents('dns-check.json', $json);
 					?>
                     </tbody>
                 </table>
