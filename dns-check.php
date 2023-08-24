@@ -170,13 +170,15 @@ $hostname = gethostname();
 
 						$ips_ = '';
 
+						var_dump($resolve_ips);
+
 						foreach ($resolve_ips as $ip) {
 							if ($domain === $hostname) {
 								$domain = '_SERVER_HOSTNAME_';
 							}
 
 							$check = check_valid_resolve_ip($ip, $domain);
-							$ips_ .= '<span class="alert alert-' . $check['label'] . '">' . implode(',', $ip) . '</span> ' . $check['msg'] . '<br><br>';
+							$ips_ .= '<span class="alert alert-' . $check['label'] . '">' . $ip . '</span> ' . $check['msg'] . '<br><br>';
 						}
 						$ips = rtrim($ips_, '<br>');
 						$ip_result_html = $ips !== '' ? $ips : '<span class="alert alert-danger">Not Resolve</span>';
