@@ -1,9 +1,11 @@
 <?php
+ob_start();
 @include_once('/usr/local/cpanel/php/WHM.php');
 if (class_exists(class: WHM::class)) {
 	WHM::header('', 0, 0);
 }
 
+ob_clean();
 ob_start();
 
 if ($cache_static = @file_get_contents('dns-check.html')) {
