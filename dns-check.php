@@ -129,6 +129,9 @@ $hostname = gethostname();
 					<?php
 					$json = [];
 					@$json = file_get_contents('dns-check.json');
+					if ($json === false) {
+						$json = [];
+					}
 					$json = json_decode($json, true);
 					$timestamp = $json['timestamp'] ?? 0;
 
