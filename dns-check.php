@@ -182,7 +182,8 @@ $hostname = gethostname();
                             <td><?= $domain_local_acc['acc'] ?></td>
                             <td><?= $domain_local_acc['reseller'] ?></td>
                             <td>(<?= $domain_local_acc['type'] ?>) <a class="btn btn-info"
-                                                                      href="https://<?= $domain ?>/"><?= $domain ?></a>
+                                                                      href="https://<?= $domain ?>/"
+                                                                      target="_blank"><?= $domain ?></a>
                             </td>
                             <td><?= $domain_local_acc['ip'] ?></td>
                             <td><?= $ip_result_html ?><br></td>
