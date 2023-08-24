@@ -127,18 +127,18 @@ $hostname = gethostname();
                     </thead>
                     <tbody>
 					<?php
-                    // display all errors and warning
-                    error_reporting(E_ALL);
-                    ini_set('display_errors', '1');
-                    
+					// display all errors and warning
+					error_reporting(E_ALL);
+					ini_set('display_errors', '1');
+
 					$json = [];
 					@$json = file_get_contents('dns-check.json');
 
 					if (is_string($json)) {
 						$json = json_decode($json, true);
-                    }
+					}
 
-                    $timestamp = $json['timestamp'] ?? 0;
+					$timestamp = $json['timestamp'] ?? 0;
 
 					if (time() - $timestamp > 86400) {
 						$json = [];
@@ -146,6 +146,10 @@ $hostname = gethostname();
 
 					foreach ($all_domains_local as $domain) {
 						$domain_local_acc = get_domain_ip_local_file($domain);
+
+						if (empty($domain_local_acc['type'])) {
+							continue;
+						}
 
 						if ($domain_local_acc['type'] === 'sub' || $domain_local_acc['type'] === 'main' || empty($domain_local_acc['acc'])) {
 							continue;
