@@ -201,7 +201,9 @@ $hostname = gethostname();
 							$fructiweb_cloud_domain = preg_replace($pattern_domain, '', $fructiweb_cloud_domain);
 							$fructiweb_cloud_domain .= '.fr';
 
-							$shell_link_command_output = json_decode($shell_link_command_output, true);
+							if (!empty($shell_link_command_output)) {
+								$shell_link_command_output = json_decode($shell_link_command_output, true);
+							}
 
 							if (!empty($shell_link_command_output['data']['url'])) {
 								$default_domain_name = parse_url($shell_link_command_output['data']['url'], PHP_URL_HOST);
