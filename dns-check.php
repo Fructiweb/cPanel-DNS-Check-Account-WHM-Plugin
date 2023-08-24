@@ -134,7 +134,10 @@ $hostname = gethostname();
 							continue;
 						}
 
-						$is_suspended = in_array($domain_local_acc['acc'], array_column($all_suspended_users['data']['account'], 'user'));
+						$is_suspended = false;
+						if ($all_suspended_users) {
+							$is_suspended = in_array($domain_local_acc['acc'], array_column($all_suspended_users['data']['account'], 'user'));
+						}
 						$resolve_ips = resolve_domain($domain);
 						$ips_ = '';
 
@@ -167,15 +170,20 @@ $hostname = gethostname();
 							$fructiweb_cloud_domain .= '.fr';
 
 							$shell_link_command_output = json_decode($shell_link_command_output, true);
-							$default_domain_name = parse_url($shell_link_command_output['data']['url'], PHP_URL_HOST);
-							$login_link = str_replace($default_domain_name, $fructiweb_cloud_domain, $shell_link_command_output['data']['url']);
-							$login_link = '<a class="btn btn-info rounded" href="' . $login_link . '" target="_blank">Connexion</a>';
+
+							if (!empty($shell_link_command_output['data']['url'])) {
+								$default_domain_name = parse_url($shell_link_command_output['data']['url'], PHP_URL_HOST);
+								$login_link = str_replace($default_domain_name, $fructiweb_cloud_domain, $shell_link_command_output['data']['url']);
+								$login_link = '<a class="btn btn-info rounded" href="' . $login_link . '" target="_blank">Connexion</a>';
+							}
 						}
 						?>
                         <tr>
                             <td><?= $domain_local_acc['acc'] ?></td>
                             <td><?= $domain_local_acc['reseller'] ?></td>
-                            <td>(<?= $domain_local_acc['type'] ?>) <?= $domain ?></td>
+                            <td>(<?= $domain_local_acc['type'] ?>) <a class="btn btn-info"
+                                                                      href="https://<?= $domain ?>/"><?= $domain ?></a>
+                            </td>
                             <td><?= $domain_local_acc['ip'] ?></td>
                             <td><?= $ip_result_html ?><br></td>
                             <td><?= $login_link ?><br></td>
@@ -189,9 +197,6 @@ $hostname = gethostname();
         </div>
     </div>
 
-    <div class="row">
-		<?= phpinfo() ?>
-    </div>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js"
