@@ -127,9 +127,6 @@ $hostname = gethostname();
                     </thead>
                     <tbody>
 					<?php
-					// display all errors and warning
-					error_reporting(E_ALL);
-					ini_set('display_errors', '1');
 
 					$json = [];
 					@$json = file_get_contents('dns-check.json');
