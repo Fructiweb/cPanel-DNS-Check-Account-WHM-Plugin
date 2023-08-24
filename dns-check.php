@@ -108,6 +108,8 @@ $hostname = gethostname();
             <div class="row">
                 <div class="col-md-12">
                     <h1>cPanel DNS Check Account WHM Plugin</h1>
+                    <p>Data are processed every 24h by compiling a static html file upon first access. (this can be
+                        triggered by a cron job)</p>
                 </div>
             </div>
         </div>
