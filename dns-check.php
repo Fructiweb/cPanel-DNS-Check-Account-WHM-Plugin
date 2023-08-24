@@ -7,7 +7,7 @@ if (class_exists(class: WHM::class)) {
 }
 
 if ($cache_static = @file_get_contents('dns-check.html')) {
-	if (time() - filemtime('dns-check.html') > 86400) {
+	if (time() - filemtime('dns-check.html') < 86400) {
 		echo $cache_static;
 		exit;
 	}
