@@ -80,7 +80,7 @@ function get_domain_ip_local_file($domain): array
 					$explode_ip[0] = $explode_ip_nat[1];
 				}
 			}
-			return ['ip' => $explode_ip[0], 'acc' => trim($explode_two[1]), 'reseller' => trim($explode[1]), 'type' => trim($explode[2])];
+			return ['ip' => $explode_ip[0], 'acc' => trim($explode_two[1]), 'reseller' => trim($explode[1]), 'sub' => $explode[3], 'type' => trim($explode[2])];
 		}
 	}
 	return [];
@@ -151,7 +151,7 @@ $hostname = gethostname();
 							continue;
 						}
 
-						if ($domain_local_acc['type'] === 'sub' || empty($domain_local_acc['acc'])) {
+						if ($domain_local_acc['type'] === 'sub' || $domain_local_acc['type'] === 'main' || empty($domain_local_acc['acc'])) {
 							continue;
 						}
 
