@@ -151,7 +151,7 @@ $hostname = gethostname();
 							continue;
 						}
 
-						if ($domain_local_acc['type'] === 'sub' || $domain_local_acc['type'] === 'main' || empty($domain_local_acc['acc'])) {
+						if ($domain_local_acc['type'] === 'sub' || empty($domain_local_acc['acc'])) {
 							continue;
 						}
 
