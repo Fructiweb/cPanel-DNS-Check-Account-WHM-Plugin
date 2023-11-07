@@ -193,6 +193,8 @@ $hostname = gethostname();
 							$login_link = '';
 							$shell_link_command_output = shell_exec('/usr/local/cpanel/bin/whmapi1 --output=jsonpretty create_user_session user=' . $domain_local_acc['acc'] . ' service=cpaneld');
 
+							$domain_local_acc['sub'] = strstr($domain_local_acc['sub'], 'cloud');
+                            
 							$pattern_cloud = "/cloud\d+/";
 							$pattern_domain = "/(\w+)fructiweb/";
 							$replacement_cloud = "$0.";
