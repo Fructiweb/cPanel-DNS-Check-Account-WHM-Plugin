@@ -194,14 +194,14 @@ $hostname = gethostname();
 							$shell_link_command_output = shell_exec('/usr/local/cpanel/bin/whmapi1 --output=jsonpretty create_user_session user=' . $domain_local_acc['acc'] . ' service=cpaneld');
 
 							$domain_local_acc['sub'] = strstr($domain_local_acc['sub'], 'cloud');
-                            
-							$pattern_cloud = "/cloud\d+/";
+
+							/*$pattern_cloud = "/cloud\d+/";
 							$pattern_domain = "/(\w+)fructiweb/";
 							$replacement_cloud = "$0.";
 
 							$fructiweb_cloud_domain = preg_replace($pattern_cloud, $replacement_cloud, $domain_local_acc['sub']);
 							$fructiweb_cloud_domain = preg_replace($pattern_domain, '', $fructiweb_cloud_domain);
-							$fructiweb_cloud_domain .= '.fr';
+							$fructiweb_cloud_domain .= '.fr';*/
 
 							if (!empty($shell_link_command_output)) {
 								$shell_link_command_output = json_decode($shell_link_command_output, true);
