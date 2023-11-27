@@ -133,11 +133,12 @@ $hostname = gethostname();
 					foreach ($all_domains_local as $domain) {
 						$domain_local_acc = get_domain_ip_local_file($domain);
 
-						if (count($domain_local_acc) === 0) {
+                        var_dump($domain_local_acc);
+						/*if (count($domain_local_acc) === 0) {
 							continue;
 						} else {
 							var_dump($domain_local_acc);
-						}
+						}*/
 						echo "<br><br>";
 
 						if (empty($domain_local_acc['type'])) {
