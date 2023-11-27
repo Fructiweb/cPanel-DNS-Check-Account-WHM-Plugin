@@ -5,7 +5,8 @@ if (class_exists(class: WHM::class)) {
 	WHM::header('', 0, 0);
 }
 
-$localdomain = '/etc/remotedomains';
+$localdomain = '/etc/localdomains';
+$remotedomain = '/etc/remotedomains';
 $userdatadomains = '/etc/userdatadomains';
 $ini_set = 0;
 
@@ -88,6 +89,8 @@ function get_domain_ip_local_file($domain): array
 
 $all_suspended_users = json_decode(shell_exec('/usr/local/cpanel/bin/whmapi1 listsuspended --output=jsonpretty'), true);
 $all_domains_local = open_file_per_line($localdomain);
+$all_domains_remote = open_file_per_line($remotedomain);
+$all_domains = array_merge($all_domains_local, $all_domains_remote);
 $hostname = gethostname();
 
 ?>
@@ -130,22 +133,13 @@ $hostname = gethostname();
                     </thead>
                     <tbody>
 					<?php
-					foreach ($all_domains_local as $domain) {
+					foreach ($all_domains as $domain) {
 						$domain_local_acc = get_domain_ip_local_file($domain);
-
-						var_dump($domain_local_acc);
-						/*if (count($domain_local_acc) === 0) {
-							continue;
-						} else {
-							var_dump($domain_local_acc);
-						}*/
-						echo "<br><br>";
-
 						if (empty($domain_local_acc['type'])) {
 							continue;
 						}
 
-						if ($domain_local_acc['type'] !== 'addon') { //|| empty($domain_local_acc['acc'])) {
+						if ($domain_local_acc['type'] !== 'addon' || empty($domain_local_acc['acc'])) {
 							continue;
 						}
 
