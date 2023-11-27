@@ -130,10 +130,9 @@ $hostname = gethostname();
                     </thead>
                     <tbody>
 					<?php
-                    var_dump($all_domains_local);
-                    exit();
 					foreach ($all_domains_local as $domain) {
 						$domain_local_acc = get_domain_ip_local_file($domain);
+                        var_dump($domain_local_acc);
 
 						if (empty($domain_local_acc['type'])) {
 							continue;
