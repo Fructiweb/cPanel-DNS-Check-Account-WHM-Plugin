@@ -5,7 +5,7 @@ if (class_exists(class: WHM::class)) {
 	WHM::header('', 0, 0);
 }
 
-$localdomain = '/etc/localdomains';
+$localdomain = '/etc/remotedomains';
 $userdatadomains = '/etc/userdatadomains';
 $ini_set = 0;
 
@@ -133,7 +133,7 @@ $hostname = gethostname();
 					foreach ($all_domains_local as $domain) {
 						$domain_local_acc = get_domain_ip_local_file($domain);
 
-                        var_dump($domain_local_acc);
+						var_dump($domain_local_acc);
 						/*if (count($domain_local_acc) === 0) {
 							continue;
 						} else {
