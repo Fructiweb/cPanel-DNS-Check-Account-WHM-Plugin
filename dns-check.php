@@ -133,7 +133,7 @@ $hostname = gethostname();
 					foreach ($all_domains_local as $domain) {
 						$domain_local_acc = get_domain_ip_local_file($domain);
 						if ($domain_local_acc === []) {
-							var_dump($domain);
+							continue;
 						} else {
 							var_dump($domain_local_acc);
 						}
@@ -143,7 +143,7 @@ $hostname = gethostname();
 							continue;
 						}
 
-						if ($domain_local_acc['type'] === 'sub' || $domain_local_acc['type'] === 'main' || empty($domain_local_acc['acc'])) {
+						if ($domain_local_acc['type'] !== 'addon') { //|| empty($domain_local_acc['acc'])) {
 							continue;
 						}
 
