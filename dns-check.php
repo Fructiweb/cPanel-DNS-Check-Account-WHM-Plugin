@@ -88,17 +88,60 @@ function get_domain_ip_local_file($domain): array
 }
 
 $all_suspended_users = json_decode(shell_exec('/usr/local/cpanel/bin/whmapi1 listsuspended --output=jsonpretty'), true);
-$all_domains_local = open_file_per_line($localdomain);
-$all_domains_remote = open_file_per_line($remotedomain);
-$all_domains = array_merge($all_domains_local, $all_domains_remote);
+
+if (file_exists('dns_check_cache')) {
+	$all_domains = json_decode(file_get_contents('dns_check_cache'), true);
+} else {
+	$all_domains = [];
+}
+
+if (isset($all_domains['expire']) && $all_domains['expire'] < time() - 86400) {
+	$all_domains = [];
+} else {
+	$all_domains_local = open_file_per_line($localdomain);
+	$all_domains_remote = open_file_per_line($remotedomain);
+	$all_domains = array_merge($all_domains_local, is_bool($all_domains_remote) ? [] : $all_domains_remote);
+	$all_domains['expire'] = time();
+	file_put_contents('dns_check_cache', json_encode($all_domains));
+}
+
 $hostname = gethostname();
 
 ?>
+
 <title>DNS Check Account</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.1/dist/darkly/bootstrap.min.css"
       integrity="sha256-jBk81HSkRnnLLjgZa5W96w8mjNj/WyoBFo7sbLvn9kg=" crossorigin="anonymous">
 <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('filterList').addEventListener('keyup', (e) => {
+                filterList(e.target.value);
+            });
+        });
+
+        function filterList(t) {
+            let filter, row, i, txtValue;
+
+            filter = t.toUpperCase();
+            row = document.querySelectorAll('tr');
+
+            for (i = 0; i < row.length; i++) {
+                const tdRow = row[i].querySelectorAll('td');
+
+                for (let j = 0; j < tdRow.length; j++) {
+                    txtValue = tdRow[j].textContent || tdRow[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        row[i].style.display = "";
+                        break;
+                    } else {
+                        row[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -216,33 +259,3 @@ $hostname = gethostname();
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
         integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
         crossorigin="anonymous"></script>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('filterList').addEventListener('keyup', (e) => {
-            filterList(e.target.value);
-        });
-    });
-
-    function filterList(t) {
-        let filter, row, i, txtValue;
-
-        filter = t.toUpperCase();
-        row = document.querySelectorAll('tr');
-
-        for (i = 0; i < row.length; i++) {
-            const tdRow = row[i].querySelectorAll('td');
-
-            for (let j = 0; j < tdRow.length; j++) {
-                txtValue = tdRow[j].textContent || tdRow[j].innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    row[i].style.display = "";
-                    break;
-                } else {
-                    row[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
